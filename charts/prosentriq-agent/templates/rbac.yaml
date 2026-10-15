@@ -1,0 +1,24 @@
+# Least privilege: list/get pods only, to map cgroup ids to pod/namespace/image
+# for the pods scheduled on the agent's own node.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "agent.name" . }}
+  labels: {{- include "agent.labels" . | nindent 4 }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "agent.name" . }}-pod-reader
+rules:
+  - apiGroups: [""]
+    resources: [pods]
+    verbs: [get, list]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "agent.name" . }}-pod-reader
+roleRef: { apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: {{ include "agent.name" . }}-pod-reader }
+subjects:
+  - { kind: ServiceAccount, name: {{ include "agent.name" . }}, namespace: {{ .Release.Namespace }} }

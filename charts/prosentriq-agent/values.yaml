@@ -1,0 +1,20 @@
+image:
+  repository: ghcr.io/prosentriq/agent
+  digest: ""        # sha256:...; wins over tag (immutable)
+  tag: ""
+  pullPolicy: IfNotPresent
+
+apiBase: https://api.prosentriq.com
+# Enrollment key from Settings -> Sensors (psqe_...). Prefer existingSecret.
+enrollKey: ""
+existingSecret: ""          # secret with key "enrollKey"
+# Interface the XDP probe attaches to on every node.
+interface: eth0
+# Hosts start observe-only; switch per host from the console (desired mode).
+nodeSelector: { kubernetes.io/os: linux }
+tolerations:
+  - operator: Exists          # run on every node, including tainted ones
+resources:
+  requests: { cpu: 100m, memory: 256Mi }
+  limits: { memory: 768Mi }
+priorityClassName: system-node-critical
