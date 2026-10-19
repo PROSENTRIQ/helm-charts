@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/prosentriq/agent
-  digest: ""        # sha256:...; wins over tag (immutable)
+  digest: sha256:0e9b8cad216cd3d4f0f98f0e77484672f20af1ab385ec549bc5ea59e12d66d89        # sha256:...; wins over tag (immutable)
   tag: ""
   pullPolicy: IfNotPresent
 

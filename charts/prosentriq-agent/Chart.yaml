@@ -2,5 +2,5 @@ apiVersion: v2
 name: prosentriq-agent
 description: Prosentriq Linux sensor (XDP/eBPF engine + bridge) as a DaemonSet, with pod/namespace/image attribution.
 type: application
-version: 2.0.0
-appVersion: "2.0.0"
+version: 2.0.0-rc.2
+appVersion: "2.0.0-rc.2"
