@@ -8,23 +8,27 @@ The source is published so you can review exactly what runs on your nodes.
 
 ## Install
 
-Create an enrollment key in the console (Settings → Sensors). Keep it in a
-Secret rather than on the command line:
+Create an enrollment key in the console (Sensors → Create enrollment key).
+Keep it in a Secret rather than on the command line:
 
 ```bash
 kubectl create namespace prosentriq
 kubectl -n prosentriq create secret generic prosentriq-enroll --from-literal=enrollKey=psqe_...
 
-git clone https://github.com/PROSENTRIQ/helm-charts
-helm install prosentriq-agent ./helm-charts/charts/prosentriq-agent -n prosentriq \
+helm install prosentriq-agent oci://ghcr.io/prosentriq/charts/prosentriq-agent \
+    --version <release> -n prosentriq \
     --set existingSecret=prosentriq-enroll \
     --set interface=eth0
 ```
 
-From the first release, the chart is also published as an OCI artifact at
-`oci://ghcr.io/prosentriq/charts/prosentriq-agent`, and the sensor image at
-`ghcr.io/prosentriq/agent`, both signed. See
+Use the latest [release](https://github.com/PROSENTRIQ/releases/releases)'s
+version, for example `--version 2.0.0-rc.2`. The chart and the sensor image
+(`ghcr.io/prosentriq/agent`) are signed; see
 [PROSENTRIQ/releases](https://github.com/PROSENTRIQ/releases) to verify them.
+To install from a clone of this repository instead, use
+`./helm-charts/charts/prosentriq-agent` in place of the `oci://` reference.
+
+The full guide: [Installing on Kubernetes](https://github.com/PROSENTRIQ/docs/blob/main/install/kubernetes.md).
 
 ## What the sensor needs on a node
 
